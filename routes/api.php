@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Redis;
-
+use App\Http\Controllers\Api\ProductController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,3 +46,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::delete('/{id}', [UserController::class, 'destroy']);
     });
 });
+Route::post('/add-product',[ProductController::class,'store']);
+Route::get('/get-product',[ProductController::class,'index']);
+Route::get('/show-product/{id}',[ProductController::class,'edit']);
+Route::put('/update-product/{id}',[ProductController::class,'update']);
+Route::delete('/delete-product/{id}',[ProductController::class,'delete']);
