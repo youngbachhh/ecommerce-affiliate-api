@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RoleModel extends Model
+class Transactions extends Model
 {
     use HasFactory;
-    protected $table = 'roles';
+    protected $table = 'transactions';
     protected $fillable = [
-        "name",
-        "description",
+        "wallet_type",
+        "amount",
+        "status",
+        "user_id",
     ];
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-    public function rolePermission()
-    {
-        return $this->hasMany(RolePermissionModel::class);
     }
 }

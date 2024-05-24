@@ -28,22 +28,22 @@ class User extends Model
     ];
     public function userInfo()
     {
-        return $this->hasOne(UserInfoModel::class);
+        return $this->hasOne(UserInfo::class);
     }
     public function commission()
     {
-        return $this->hasOne(CommissionModel::class);
+        return $this->hasOne(Commission::class);
     }
     public function transactions()
     {
-        return $this->hasOne(TransactionsModel::class);
+        return $this->hasOne(Transactions::class);
     }
     public function role()
     {
-        return $this->hasOne(RoleModel::class);
+        return $this->hasOne(Role::class);
     }
     public function cart()
     {
-        return $this->hasOne(CartModel::class);
+        return $this->hasOne(Cart::class);
     }
 }

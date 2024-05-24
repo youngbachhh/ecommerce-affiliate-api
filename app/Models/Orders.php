@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrdersModel extends Model
+class Orders extends Model
 {
     use HasFactory;
     protected $table = "orders";
@@ -22,10 +22,10 @@ class OrdersModel extends Model
     ];
     public function orderDetail()
     {
-        return $this->hasOne(OrderDetailModel::class);
+        return $this->hasOne(OrderDetail::class);
     }
     public function payment()
     {
-        return $this->hasOne(OrdersModel::class);
+        return $this->hasOne(Orders::class);
     }
 }
