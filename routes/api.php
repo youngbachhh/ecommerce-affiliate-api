@@ -25,3 +25,7 @@ use Illuminate\Support\Facades\Redis;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
+
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
+    Route::apiResource('get', 'UserController');
+});
