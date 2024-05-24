@@ -20,7 +20,7 @@ class Products extends Model
         "is_new_arrival",
         "ratings",
         "reviews",
-        "categories_id ",
+        "categories_id",
     ];
     public function discount()
     {

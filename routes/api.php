@@ -7,9 +7,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ImageController;
-
 use Illuminate\Support\Facades\Redis;
-
+use App\Http\Controllers\Api\ProductController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,3 +28,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
     Route::apiResource('get', 'UserController');
 });
+Route::post('/add-product',[ProductController::class,'addProduct']);
+Route::get('/get-product',[ProductController::class,'getProduct']);
+Route::get('/show-product/{id}',[ProductController::class,'showProduct']);
+Route::put('/update-product/{id}',[ProductController::class,'updateProduct']);
+Route::delete('/delete-product/{id}',[ProductController::class,'deleteProduct']);
