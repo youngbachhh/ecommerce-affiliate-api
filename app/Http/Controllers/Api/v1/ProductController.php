@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Products;
 use Illuminate\Http\Request;
 
@@ -80,6 +81,18 @@ class ProductController extends Controller
         }
         $data->delete();
         return response()->json(['status'=>'success']);
-
+    }
+    public function addToCart(Request $request){
+        $res = ['status'=>'errors','message'=>'errors'];
+//        $user_id = Auth::user();
+//        if (!$user_id) {
+//            return response()->json($res, 200);
+//        }
+            $data = $request->all();
+            if(!$data){
+                return response()->json($res);
+            }
+            $cart = Cart::create($data);
+            return response()->json(['status'=>'success']);
     }
 }

@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Redis;
-use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\v1\ProductController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,3 +33,5 @@ Route::get('/get-product',[ProductController::class,'index']);
 Route::get('/show-product/{id}',[ProductController::class,'edit']);
 Route::put('/update-product/{id}',[ProductController::class,'update']);
 Route::delete('/delete-product/{id}',[ProductController::class,'delete']);
+//add to cart
+Route::post('/add-to-cart',[ProductController::class,'addToCart']);
