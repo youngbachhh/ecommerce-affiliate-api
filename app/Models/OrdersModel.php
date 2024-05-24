@@ -20,4 +20,12 @@ class OrdersModel extends Model
         "product_id",
         "user_id"
     ];
+    public function orderDetail()
+    {
+        return $this->hasOne(OrderDetailModel::class);
+    }
+    public function payment()
+    {
+        return $this->hasOne(OrdersModel::class);
+    }
 }

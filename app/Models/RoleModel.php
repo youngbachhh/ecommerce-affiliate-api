@@ -13,4 +13,12 @@ class RoleModel extends Model
         "name",
         "description",
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function rolePermission()
+    {
+        return $this->hasMany(RolePermissionModel::class);
+    }
 }

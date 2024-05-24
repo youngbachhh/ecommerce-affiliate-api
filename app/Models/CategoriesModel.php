@@ -13,4 +13,8 @@ class CategoriesModel extends Model
         "name",
         "description",
     ];
+    public function carts()
+    {
+        return $this->hasMany(ProductsModel::class);
+    }
 }

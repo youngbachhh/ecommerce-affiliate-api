@@ -13,4 +13,8 @@ class RolePermissionModel extends Model
         "gurd_name",
         "role_id",
     ];
+    public function role()
+    {
+        return $this->belongsTo(RoleModel::class);
+    }
 }

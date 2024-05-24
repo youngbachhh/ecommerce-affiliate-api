@@ -22,5 +22,16 @@ class ProductsModel extends Model
         "reviews",
         "categories_id ",
     ];
-
+    public function discount()
+    {
+        return $this->hasOne(DiscountsModel::class);
+    }
+    public function carts()
+    {
+        return $this->hasMany(CartModel::class);
+    }
+    public function categories()
+    {
+        return $this->belongsTo(ProductsModel::class);
+    }
 }

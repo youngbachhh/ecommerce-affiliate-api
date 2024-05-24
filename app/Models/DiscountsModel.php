@@ -13,4 +13,8 @@ class DiscountsModel extends Model
         "discount_value",
         "product_id",
     ];
+    public function product()
+    {
+        return $this->belongsTo(ProductsModel::class);
+    }
 }

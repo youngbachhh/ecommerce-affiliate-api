@@ -17,4 +17,8 @@ class PaymentsModel extends Model
         "transaction_id",
         "order_id",
     ];
+    public function order()
+    {
+        return $this->belongsTo(OrdersModel::class);
+    }
 }

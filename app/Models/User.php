@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class User extends Model
 {
     use HasFactory;
@@ -27,4 +26,24 @@ class User extends Model
         'password',
         'remember_token',
     ];
+    public function userInfo()
+    {
+        return $this->hasOne(UserInfoModel::class);
+    }
+    public function commission()
+    {
+        return $this->hasOne(CommissionModel::class);
+    }
+    public function transactions()
+    {
+        return $this->hasOne(TransactionsModel::class);
+    }
+    public function role()
+    {
+        return $this->hasOne(RoleModel::class);
+    }
+    public function cart()
+    {
+        return $this->hasOne(CartModel::class);
+    }
 }
