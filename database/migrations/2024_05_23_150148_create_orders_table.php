@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
             $table->integer('total_money')->nullable();
-            $table->boolean('status')->default(false);
+            $table->enum('status', ['pending', 'completed', 'refunded', 'failed']);
             $table->string('note')->nullable();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('user_id');
