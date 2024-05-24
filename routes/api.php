@@ -28,8 +28,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
     Route::apiResource('get', 'UserController');
 });
-Route::post('/add-product',[ProductController::class,'addProduct']);
-Route::get('/get-product',[ProductController::class,'getProduct']);
-Route::get('/show-product/{id}',[ProductController::class,'showProduct']);
-Route::put('/update-product/{id}',[ProductController::class,'updateProduct']);
-Route::delete('/delete-product/{id}',[ProductController::class,'deleteProduct']);
+Route::post('/add-product',[ProductController::class,'store']);
+Route::get('/get-product',[ProductController::class,'index']);
+Route::get('/show-product/{id}',[ProductController::class,'edit']);
+Route::put('/update-product/{id}',[ProductController::class,'update']);
+Route::delete('/delete-product/{id}',[ProductController::class,'delete']);
