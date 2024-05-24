@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
+
 {
     use HasFactory;
     protected $table = 'users';
@@ -38,5 +39,26 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function userInfo()
+    {
+        return $this->hasOne(UserInfo::class);
+    }
+    public function commission()
+    {
+        return $this->hasOne(Commission::class);
+    }
+    public function transactions()
+    {
+        return $this->hasOne(Transactions::class);
+    }
+    public function role()
+    {
+        return $this->hasOne(Role::class);
+    }
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
     }
 }

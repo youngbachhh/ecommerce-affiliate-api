@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\RoleModel;
+use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,11 +21,11 @@ class RoleSeeder extends Seeder
             "User", // Người dùng
         ];
         foreach ($data as $key => $value) {
-            $data_check = RoleModel::where('name', $value)->get();
+            $data_check = Role::where('name', $value)->get();
             if (count($data_check) > 0) {
                 continue;
             }
-            RoleModel::create([
+            Role::create([
                 'name' => $value
             ]);
         }
