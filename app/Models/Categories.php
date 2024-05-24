@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RoleModel extends Model
+class Categories extends Model
 {
     use HasFactory;
-    protected $table = 'roles';
+    protected $table = "categories";
     protected $fillable = [
         "name",
         "description",
     ];
+    public function carts()
+    {
+        return $this->hasMany(Products::class);
+    }
 }
