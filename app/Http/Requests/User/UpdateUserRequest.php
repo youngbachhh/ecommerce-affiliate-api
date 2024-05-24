@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
+class UpdateUserRequest extends FormRequest
+{
+    public function authorize()
+    {
+        try {
+            // Lấy thông tin người dùng hiện tại từ JWT token
+            $user = JWTAuth::parseToken()->authenticate();
+
+            // Lấy user_id từ route và đảm bảo nó là số
+            $routeUserId = (int) $this->route('user');
+
+            // Kiểm tra xem user id trong token có khớp với user id trong route hay không
+            return $user->id === $routeUserId;
+        } catch (\Exception $e) {
+            // Nếu có lỗi khi xác thực JWT, trả về false
+            return false;
+        }
+    }
+
+    public function rules()
+    {
+        return [
+            'name' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $this->route('user'),
+            'password' => 'sometimes|required|string|min:6',
+        ];
+    }
+}
