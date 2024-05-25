@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Redis;
-use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\v1\ProductController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -51,3 +51,8 @@ Route::get('/get-product',[ProductController::class,'index']);
 Route::get('/show-product/{id}',[ProductController::class,'edit']);
 Route::put('/update-product/{id}',[ProductController::class,'update']);
 Route::delete('/delete-product/{id}',[ProductController::class,'delete']);
+// cart
+Route::post('/add-to-cart',[ProductController::class,'addToCart']);
+Route::get('/get-to-cart',[ProductController::class,'getToCart']);
+Route::post('/del-to-cart',[ProductController::class,'delToCart']);
+Route::post('/update-to-cart',[ProductController::class,'updateToCart']);
