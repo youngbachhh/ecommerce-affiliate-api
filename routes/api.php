@@ -51,5 +51,8 @@ Route::get('/get-product',[ProductController::class,'index']);
 Route::get('/show-product/{id}',[ProductController::class,'edit']);
 Route::put('/update-product/{id}',[ProductController::class,'update']);
 Route::delete('/delete-product/{id}',[ProductController::class,'delete']);
-//add to cart
+// cart
 Route::post('/add-to-cart',[ProductController::class,'addToCart']);
+Route::get('/get-to-cart',[ProductController::class,'getToCart']);
+Route::post('/del-to-cart',[ProductController::class,'delToCart']);
+Route::post('/update-to-cart',[ProductController::class,'updateToCart']);
