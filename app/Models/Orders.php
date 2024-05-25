@@ -28,4 +28,8 @@ class Orders extends Model
     {
         return $this->hasOne(Orders::class);
     }
+    public function ship()
+    {
+        return $this->hasOne(Ship::class);
+    }
 }

@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('ship', function (Blueprint $table) {
             $table->id();
-            $table->string('amount')->nullable();
-            $table->string('payment_date')->nullable();
-            $table->string('payment_method')->nullable();
-            $table->enum('status', ['paid', 'pending', 'cancelled', 'failed']);
-            $table->string('transaction_id')->nullable();
-            $table->unsignedBigInteger('order_id');
+            $table->enum('status', ['delivered', 'out for delivery', 'ready to pickup', 'dispatched']);
+            $table->datetime('begin_time')->nullable();
+            $table->datetime('expected_arrive')->nullable();
+            $table->unsignedBigInteger('user_id'); // Thêm cột user_id
+            $table->unsignedBigInteger('order_id'); // Thêm cột order_id
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();
         });
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('ship');
     }
 };

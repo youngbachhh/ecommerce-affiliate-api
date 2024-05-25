@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('reviews')->nullable();
             $table->unsignedBigInteger('categories_id');
             $table->foreign('categories_id')->references('id')->on('categories');
+            $table->enum('status', ['published', 'inactive', 'scheduled']);
             $table->timestamps();
         });
     }
