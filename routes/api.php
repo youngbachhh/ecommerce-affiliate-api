@@ -2,11 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\ImageController;
+
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Api\v1\ProductController;
 /*
@@ -22,11 +20,31 @@ use App\Http\Controllers\Api\v1\ProductController;
 
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth')->get('/user', function (Request $request) {
+    return $request->user();
 });
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
-    Route::apiResource('get', 'UserController');
+    Route::group([
+        'middleware' => 'api',
+        'prefix' => 'auth'
+    ], function ($router) {
+        Route::post('login', [AuthController::class, 'login']);
+        Route::post('logout', [AuthController::class, 'logout']);
+        Route::post('refresh', [AuthController::class, 'refresh']);
+        Route::post('me', [AuthController::class, 'me']);
+    });
+
+    Route::group([
+        'middleware' => ['api', 'jwt.auth'],
+        'prefix' => 'user'
+    ], function ($router) {
+        Route::get('/', [UserController::class, 'index']);
+        Route::get('/{id}', [UserController::class, 'show']);
+        Route::post('/', [UserController::class, 'store']);
+        Route::put('/{id}', [UserController::class, 'update']);
+        Route::delete('/{id}', [UserController::class, 'destroy']);
+    });
 });
 Route::post('/add-product',[ProductController::class,'store']);
 Route::get('/get-product',[ProductController::class,'index']);
