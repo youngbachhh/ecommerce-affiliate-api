@@ -25,10 +25,10 @@ class Cart extends Model
     }
     public function product()
     {
-        return $this->belongsTo(Products::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
     public function getProductAttribute()
     {
-        return Products::where('id', $this->attributes['product_id'])->first();
+        return Product::where('id', $this->attributes['product_id'])->first();
     }
 }
