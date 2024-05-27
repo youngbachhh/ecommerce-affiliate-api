@@ -22,8 +22,6 @@ return new class extends Migration
             $table->string('referral_code')->nullable();
             $table->string('referrer_id')->nullable();
             $table->string('total_revenue')->nullable();
-            $table->string('wallet')->nullable();
-            $table->string('bonus_wallet')->nullable();
             $table->string('phone')->nullable();
             $table->enum('status', ['active', 'inactive', 'pending'])->default('pending');
             // Tạo cột user_id
