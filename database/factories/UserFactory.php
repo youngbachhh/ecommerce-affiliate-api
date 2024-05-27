@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -20,7 +21,7 @@ class UserFactory extends Factory
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'address' => $this->faker->address,
-            'phone_number' => $this->faker->phoneNumber,
+            'phone' => $this->faker->phoneNumber,
             'password' => bcrypt('password'), // Mật khẩu mặc định có thể là 'password'
             'referral_code' => Str::random(8),
             'referrer_id' => null,

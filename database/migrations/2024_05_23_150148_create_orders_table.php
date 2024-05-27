@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('address')->nullable();
-            $table->string('phone_number')->nullable();
+            $table->string('phone')->nullable();
             $table->integer('total_money')->nullable();
             $table->enum('status', ['pending', 'completed', 'refunded', 'failed']);
             $table->string('note')->nullable();

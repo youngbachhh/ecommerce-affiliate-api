@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Products extends Model
+class Product extends Model
 {
     use HasFactory;
     protected $table = "products";
@@ -24,7 +24,7 @@ class Products extends Model
     ];
     public function discount()
     {
-        return $this->hasOne(Discounts::class);
+        return $this->hasOne(Discount::class);
     }
     public function carts()
     {
@@ -32,6 +32,6 @@ class Products extends Model
     }
     public function categories()
     {
-        return $this->belongsTo(Products::class);
+        return $this->belongsTo(Product::class);
     }
 }

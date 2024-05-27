@@ -21,7 +21,7 @@ class OrderFactory extends Factory
             'name' => $this->faker->name,
             'email' => $this->faker->email,
             'address' => $this->faker->address,
-            'phone_number' => $this->faker->phoneNumber,
+            'phone' => $this->faker->phoneNumber,
             'total_money' => $this->faker->numberBetween(100, 1000),
             'status' => $this->faker->randomElement(['pending', 'completed', 'refunded', 'failed']),
             'note' => $this->faker->sentence,
