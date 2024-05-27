@@ -76,9 +76,7 @@ class UserService
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
-                'address' => $data['address'],
-                'phone' => $data['phone'],
-                'role' => $data['role'],
+                'role_id' => $data['role_id'],
             ]);
 
             DB::commit();
