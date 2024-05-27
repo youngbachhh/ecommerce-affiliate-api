@@ -49,7 +49,8 @@ class UserController extends Controller
             $user = $this->userService->getUserById($id);
             return ApiResponse::success($user);
         } catch (ModelNotFoundException $e) {
-            return ApiResponse::error('User not found', 404);
+            $exception = new UserNotFoundException();
+            return $exception->render(request());
         } catch (\Exception $e) {
             Log::error('Failed to fetch user: ' . $e->getMessage());
             return ApiResponse::error('Failed to fetch user', 500);
@@ -62,7 +63,8 @@ class UserController extends Controller
             $user = $this->userService->updateUser($id, $request->validated());
             return ApiResponse::success($user, 'User updated successfully');
         } catch (ModelNotFoundException $e) {
-            return ApiResponse::error('User not found', 404);
+            $exception = new UserNotFoundException();
+            return $exception->render(request());
         } catch (\Exception $e) {
             Log::error('Failed to update user: ' . $e->getMessage());
             return ApiResponse::error('Failed to update user', 500);
@@ -75,7 +77,8 @@ class UserController extends Controller
             $this->userService->deleteUser($id);
             return ApiResponse::success(null, 'User deleted successfully');
         } catch (ModelNotFoundException $e) {
-            return ApiResponse::error('User not found', 404);
+            $exception = new UserNotFoundException();
+            return $exception->render(request());
         } catch (\Exception $e) {
             Log::error('Failed to delete user: ' . $e->getMessage());
             return ApiResponse::error('Failed to delete user', 500);

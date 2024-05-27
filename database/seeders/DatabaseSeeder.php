@@ -29,19 +29,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(15)->create();
-        Role::factory(15)->create();
-        Categories::factory(15)->create();
-        Products::factory(15)->create();
-        Orders::factory(15)->create();
-        OrderDetail::factory(15)->create();
-        Payments::factory(15)->create();
-        Ship::factory(15)->create();
-        Commission::factory(15)->create();
-        RolePermission::factory(15)->create();
-        Transactions::factory(15)->create();
-        UserInfo::factory(15)->create();
-        Discounts::factory(15)->create();
-        Cart::factory(15)->create();
+        // User::factory(15)->create();
+        // Role::factory(15)->create();
+        // Categories::factory(15)->create();
+        // Products::factory(15)->create();
+        // Orders::factory(15)->create();
+        // OrderDetail::factory(15)->create();
+        // Payments::factory(15)->create();
+        // Ship::factory(15)->create();
+        // Commission::factory(15)->create();
+        // RolePermission::factory(15)->create();
+        // Transactions::factory(15)->create();
+        // UserInfo::factory(15)->create();
+        // Discounts::factory(15)->create();
+        // Cart::factory(15)->create();
+
+        $this->call([
+            RoleSeeder::class,
+            UserSeeder::class,
+        ]);
     }
 }

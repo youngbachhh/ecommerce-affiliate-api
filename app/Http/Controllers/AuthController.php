@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Responses\ApiResponse;
 
 class AuthController extends Controller
 {
@@ -27,7 +28,7 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return ApiResponse::error('Unauthorized', 401);
         }
 
         return $this->respondWithToken($token);
@@ -52,7 +53,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return ApiResponse::success('Successfully logged out');
     }
 
     /**
@@ -74,10 +75,35 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+        $user = auth()->user();
+        $userData = [
+            'id' => $user->id,
+            'fullname' => $user->name,
+            'username' => $user->name,
+            'email' => $user->email,
+            'role_id' => $user->role_id,
+            'role' => 'admin',
+            'referral_code' => $user->referral_code,
+            'referrer_id' => $user->referrer_id,
+            'address' => $user->address,
+            'total_revenue' => $user->total_revenue,
+            'wallet' => $user->wallet,
+            'bonus_wallet' => $user->bonus_wallet,
+            'phone' => $user->phone,
+            'status' => $user->status,
+        ];
+
         return response()->json([
-            'access_token' => $token,
+            'accessToken' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'userAbilityRules' => [
+                [
+                    'action' => 'manage',
+                    'subject' => 'all'
+                ]
+            ],
+            'userData' => $userData,
         ]);
     }
 }

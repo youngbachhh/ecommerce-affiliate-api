@@ -45,14 +45,19 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::put('/{id}', [UserController::class, 'update']);
         Route::delete('/{id}', [UserController::class, 'destroy']);
     });
+
+    Route::group(['prefix' => 'products'], function ($router) {
+        Route::get('/', [ProductController::class, 'index']);
+        Route::post('/', [ProductController::class, 'store']);
+        Route::get('/{id}', [ProductController::class, 'edit']);
+        Route::put('/{id}', [ProductController::class, 'update']);
+        Route::delete('/{id}', [ProductController::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'cart'], function ($router) {
+        Route::post('/', [ProductController::class, 'addToCart']);
+        Route::get('/', [ProductController::class, 'getToCart']);
+        Route::delete('/{id}', [ProductController::class, 'delToCart']);
+        Route::put('/{id}', [ProductController::class, 'updateToCart']);
+    });
 });
-Route::post('/add-product',[ProductController::class,'store']);
-Route::get('/get-product',[ProductController::class,'index']);
-Route::get('/show-product/{id}',[ProductController::class,'edit']);
-Route::put('/update-product/{id}',[ProductController::class,'update']);
-Route::delete('/delete-product/{id}',[ProductController::class,'delete']);
-// cart
-Route::post('/add-to-cart',[ProductController::class,'addToCart']);
-Route::get('/get-to-cart',[ProductController::class,'getToCart']);
-Route::post('/del-to-cart',[ProductController::class,'delToCart']);
-Route::post('/update-to-cart',[ProductController::class,'updateToCart']);
