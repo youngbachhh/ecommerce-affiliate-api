@@ -20,9 +20,6 @@ use App\Http\Controllers\Api\v1\ProductController;
 
 
 
-Route::middleware('auth')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
     Route::group([
@@ -36,7 +33,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     });
 
     Route::group([
-        'middleware' => ['api', 'jwt.auth'],
+        'middleware' => ['api'],
         'prefix' => 'user'
     ], function ($router) {
         Route::get('/', [UserController::class, 'index']);
