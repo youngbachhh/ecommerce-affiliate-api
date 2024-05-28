@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('referral_code')->nullable();
             $table->string('referrer_id')->nullable()->index();
             $table->string('phone')->nullable();
+            $table->unsignedBigInteger('commission_id')->nullable();
+            $table->foreign('commission_id')->references('id')->on('commission');
             $table->enum('status', ['active', 'inactive', 'pending'])->default('pending')->index();
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');

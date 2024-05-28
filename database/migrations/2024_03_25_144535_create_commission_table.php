@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ship', function (Blueprint $table) {
+        Schema::create('commission', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['delivered', 'out for delivery', 'ready to pickup', 'dispatched'])->index();
-            $table->timestamp('begin_time')->nullable();
-            $table->timestamp('end_time')->nullable();
-            $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->decimal('rate', 5, 2);;
+            $table->string('level');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ship');
+        Schema::dropIfExists('commission');
     }
 };

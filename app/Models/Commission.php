@@ -12,10 +12,9 @@ class Commission extends Model
     protected $fillable = [
         "commission_rate",
         "level",
-        "user_id"
     ];
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
     }
 }

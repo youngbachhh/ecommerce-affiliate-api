@@ -12,17 +12,11 @@ class Ship extends Model
     protected $fillable = [
         "status",
         "begin_time",
-        "expected_arrive",
-        "user_id",
+        "end_time",
         "order_id",
     ];
     public function order()
     {
         return $this->belongsTo(Order::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 }

@@ -12,7 +12,6 @@ class Cart extends Model
     protected $fillable = [
         "product_id",
         "user_id",
-        "amount",
     ];
     protected $hidden = [
         'created_at',
@@ -21,14 +20,14 @@ class Cart extends Model
     protected $appends = ['product'];
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
-    public function getProductAttribute()
-    {
-        return Product::where('id', $this->attributes['product_id'])->first();
-    }
+    // public function getProductAttribute()
+    // {
+    //     return Product::where('id', $this->attributes['product_id'])->first();
+    // }
 }

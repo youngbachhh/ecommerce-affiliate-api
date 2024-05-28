@@ -10,7 +10,7 @@ class RolePermission extends Model
     use HasFactory;
     protected  $table = 'role_permission';
     protected $fillable = [
-        "gurd_name",
+        "guard_name",
         "role_id",
     ];
     public function role()

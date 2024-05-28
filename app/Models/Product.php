@@ -24,14 +24,18 @@ class Product extends Model
     ];
     public function discount()
     {
-        return $this->hasOne(Discount::class);
+        return $this->belongsTo(Discount::class);
     }
     public function carts()
     {
-        return $this->hasMany(Cart::class);
+        return $this->belongsToMany(Cart::class);
     }
     public function categories()
     {
         return $this->belongsTo(Product::class);
+    }
+    public function productImages()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }
