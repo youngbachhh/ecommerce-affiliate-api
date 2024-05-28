@@ -80,13 +80,9 @@ class UserService
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-                'referral_code' => @$data['referral_code'],
+                'referral_code' => $data['referral_code'],
                 'referrer_id' => $this->randomRefferalCode(),
-                'total_revenue' => @$data['total_revenue'],
-                'wallet' => @$data['wallet'],
-                'bonus_wallet' => @$data['bonus_wallet'],
                 'phone' => @$data['phone'],
-                'status' => @$data['status'],
                 'role_id' => $data['role_id'],
                 'is_active' => 1
             ]);
