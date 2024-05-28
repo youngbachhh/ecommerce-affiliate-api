@@ -74,8 +74,14 @@ class ProductService
                 'name' => $data['name'],
                 'price' => $data['price'],
                 'quantity' => $data['quantity'],
-                'product_unit' => $data['product_unit'],
+                'product_unit' => @$data['product_unit'],
                 'categories_id' => $data['categories_id'],
+                'description' => @$data['description'],
+                'is_featured' => @$data['is_featured'],
+                'is_new_arrival' => @$data['is_new_arrival'],
+                'reviews' => @$data['reviews'],
+                'commission_rate' => @$data['commission_rate'],
+                'discount_id' => @$data['discount_id'],
             ]);
 
             DB::commit();

@@ -33,7 +33,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     });
 
     Route::group([
-        'middleware' => ['api'],
+        'middleware' => ['api','jwt.auth'],
         'prefix' => 'user'
     ], function ($router) {
         Route::get('/', [UserController::class, 'index']);
@@ -48,7 +48,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::post('/', [ProductController::class, 'store']);
         Route::get('/{id}', [ProductController::class, 'edit']);
         Route::put('/{id}', [ProductController::class, 'update']);
-        Route::delete('/{id}', [ProductController::class, 'delete']);
+        Route::delete('/{id}', [ProductController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'cart'], function ($router) {

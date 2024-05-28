@@ -46,7 +46,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function commission()
     {
-        return $this->hasOne(Commission::class);
+        return $this->belongsTo(Commission::class);
     }
     public function transactions()
     {

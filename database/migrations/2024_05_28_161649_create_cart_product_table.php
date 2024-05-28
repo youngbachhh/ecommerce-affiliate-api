@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('commission', function (Blueprint $table) {
+        Schema::create('cart_product', function (Blueprint $table) {
             $table->id();
-            $table->decimal('rate', 5, 2);;
-            $table->string('level');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('cart_id');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('cart_id')->references('id')->on('carts');
+            $table->foreign('product_id')->references('id')->on('products');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commission');
+        Schema::dropIfExists('cart_product');
     }
 };

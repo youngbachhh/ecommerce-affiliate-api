@@ -11,27 +11,31 @@ class Product extends Model
     protected $table = "products";
     protected $fillable = [
         "name",
-        "thumbnail",
         "price",
         "product_unit",
         "quantity",
         "description",
         "is_featured",
         "is_new_arrival",
-        "ratings",
         "reviews",
+        "commission_rate",
         "categories_id",
+        "discount_id",
     ];
     public function discount()
     {
-        return $this->hasOne(Discount::class);
+        return $this->belongsTo(Discount::class);
     }
     public function carts()
     {
-        return $this->hasMany(Cart::class);
+        return $this->belongsToMany(Cart::class);
     }
     public function categories()
     {
         return $this->belongsTo(Product::class);
+    }
+    public function productImages()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }

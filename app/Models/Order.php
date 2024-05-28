@@ -17,16 +17,12 @@ class Order extends Model
         "total_money",
         "status",
         "note",
-        "product_id",
+        "receive_address",
         "user_id"
     ];
     public function orderDetail()
     {
-        return $this->hasOne(OrderDetail::class);
-    }
-    public function payment()
-    {
-        return $this->hasOne(Order::class);
+        return $this->hasMany(OrderDetail::class);
     }
     public function ship()
     {
