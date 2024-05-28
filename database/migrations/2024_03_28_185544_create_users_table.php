@@ -27,7 +27,7 @@ return new class extends Migration
             $table->unsignedBigInteger('role_id');
             // Tạo ràng buộc khóa ngoại
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->boolean('is_active')->default(true);
+            // $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

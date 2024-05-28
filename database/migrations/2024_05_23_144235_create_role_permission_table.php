@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('role_permission', function (Blueprint $table) {
             $table->id();
-            $table->string('gurd_name');
+            $table->string('guard_name');
             // Tạo cột user_id
             $table->unsignedBigInteger('role_id');
             // Tạo ràng buộc khóa ngoại
