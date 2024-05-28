@@ -39,7 +39,7 @@ class UserController extends Controller
             return ApiResponse::success($user, 'User created successfully', 201);
         } catch (\Exception $e) {
             Log::error('Failed to create user: ' . $e->getMessage());
-            return ApiResponse::error($e->getMessage(), 500);
+            return ApiResponse::error('Failed to create user', 500);
         }
     }
 
@@ -67,7 +67,7 @@ class UserController extends Controller
             return $exception->render(request());
         } catch (\Exception $e) {
             Log::error('Failed to update user: ' . $e->getMessage());
-            return ApiResponse::error($e->getMessage(), 500);
+            return ApiResponse::error('Failed to update user', 500);
         }
     }
 
