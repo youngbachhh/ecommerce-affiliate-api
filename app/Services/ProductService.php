@@ -18,10 +18,11 @@ class ProductService
     }
 
     /**
-     * Fetch all products
+     * Hàm lấy ra thông tin của tất cả sản phẩm
      *
      * @return \Illuminate\Database\Eloquent\Collection
      * @throws Exception
+     * CreatedBy: youngbachhh (27/05/2024)
      */
     public function getAllProducts(): \Illuminate\Database\Eloquent\Collection
     {
@@ -35,11 +36,12 @@ class ProductService
     }
 
     /**
-     * Fetch a product by ID
+     * Hàm lấy ra thông tin của sản phẩm theo id
      *
      * @param int $id
      * @return Product
      * @throws ModelNotFoundException
+     * CreatedBy: youngbachhh (27/05/2024)
      */
     public function getProductById(int $id): Product
     {
@@ -55,11 +57,12 @@ class ProductService
     }
 
     /**
-     * Create a new product
+     * Hàm tạo mới một sản phẩm
      *
      * @param array $data
      * @return Product
      * @throws Exception
+     * CreatedBy: youngbachhh (27/05/2024)
      */
     public function createProduct(array $data): Product
     {
@@ -85,13 +88,14 @@ class ProductService
     }
 
     /**
-     * Update a product
+     * Hàm cập nhật thông tin của sản phẩm
      *
      * @param int $id
      * @param array $data
      * @return Product
      * @throws ModelNotFoundException
      * @throws Exception
+     * CreatedBy: youngbachhh (27/05/2024)
      */
     public function updateProduct(int $id, array $data): Product
     {
@@ -113,11 +117,12 @@ class ProductService
     }
 
     /**
-     * Delete a product
+     * Hàm xóa một sản phẩm
      *
      * @param int $id
      * @throws ModelNotFoundException
      * @throws Exception
+     * CreatedBy: youngbachhh (27/05/2024)
      */
     public function deleteProduct(int $id): void
     {
