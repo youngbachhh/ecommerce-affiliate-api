@@ -159,7 +159,7 @@ class UserService
     {
         $rand =  "RI" . $this->faker->numberBetween(10000000, 99999999);
 
-        $exist_user = User::where('referral_code', $rand)->first();
+        $exist_user = User::where('referral_code', $rand)->exists();
         while ($exist_user) {
             $this->randomRefferalCode();
         }
