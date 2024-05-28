@@ -22,9 +22,10 @@ return new class extends Migration
             $table->integer('total_money')->nullable();
             $table->enum('status', ['pending', 'completed', 'refunded', 'failed']);
             $table->string('note')->nullable();
-            $table->unsignedBigInteger('product_id');
+            $table->string('receive_address')->nullable();
+            // $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('product_id')->references('id')->on('products');
+            // $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
