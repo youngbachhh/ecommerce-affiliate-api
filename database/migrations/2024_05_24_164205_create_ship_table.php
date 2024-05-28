@@ -18,8 +18,8 @@ return new class extends Migration
             $table->enum('status', ['delivered', 'out for delivery', 'ready to pickup', 'dispatched'])->index();
             $table->timestamp('begin_time')->nullable();
             $table->timestamp('end_time')->nullable();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('order_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('order_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();

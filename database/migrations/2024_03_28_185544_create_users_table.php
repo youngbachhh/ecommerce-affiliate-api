@@ -20,11 +20,10 @@ return new class extends Migration
             $table->string('password');
             $table->string('address')->nullable();
             $table->string('referral_code')->nullable();
-            $table->unsignedInteger('referrer_id')->nullable()->index();
-            $table->foreign('referrer_id')->references('id')->on('users')->onDelete('set null');
+            $table->string('referrer_id')->nullable()->index();
             $table->string('phone')->nullable();
             $table->enum('status', ['active', 'inactive', 'pending'])->default('pending')->index();
-            $table->unsignedInteger('role_id');
+            $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->rememberToken();
             $table->timestamps();

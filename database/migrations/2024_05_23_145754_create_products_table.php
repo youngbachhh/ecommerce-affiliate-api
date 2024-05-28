@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('is_featured')->nullable();
             $table->string('is_new_arrival')->nullable();
             $table->decimal('commission_rate', 5, 2);
-            $table->unsignedInteger('categories_id');
-            $table->unsignedInteger('discount_id')->nullable();
+            $table->unsignedBigInteger('categories_id');
+            $table->unsignedBigInteger('discount_id')->nullable();
             $table->foreign('discount_id')->references('id')->on('discounts')->onDelete('set null');
             $table->foreign('categories_id')->references('id')->on('categories')->onDelete('restrict');
             $table->enum('status', ['published', 'inactive', 'scheduled'])->index();

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'completed', 'refunded', 'failed'])->default('pending')->index();
             $table->string('note')->nullable();
             $table->string('receive_address')->nullable();
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

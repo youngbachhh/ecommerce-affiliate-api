@@ -22,7 +22,7 @@ class StoreUserRequest extends FormRequest
             'role_id' => 'required|numeric',
             'address' => 'nullable|string|max:255',
             'referral_code' => 'nullable|string|max:255|unique:users',
-            'referrer_id' => 'nullable|numeric|exists:users,id',
+            'referrer_id' => 'nullable|string|exists:users,id',
             'phone' => 'nullable|string|max:15',
             'status' => 'required|string',
         ];
