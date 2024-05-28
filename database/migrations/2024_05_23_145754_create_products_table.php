@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('is_featured')->nullable();
             $table->string('is_new_arrival')->nullable();
             $table->string('reviews')->nullable();
+            $table->integer('commission_rate')->nullable();
             $table->unsignedBigInteger('categories_id');
             $table->unsignedBigInteger('discount_id')->nullable();
             $table->foreign('discount_id')->references('id')->on('discounts');
