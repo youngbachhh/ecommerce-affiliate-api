@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Http\Controllers\Controller;
 use App\Services\ProductService;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
 use App\Http\Responses\ApiResponse;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Exceptions\ProductNotFoundException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Exceptions\ProductNotFoundException;
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProductController extends Controller
 {

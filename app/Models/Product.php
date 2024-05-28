@@ -11,16 +11,16 @@ class Product extends Model
     protected $table = "products";
     protected $fillable = [
         "name",
-        "thumbnail",
         "price",
         "product_unit",
         "quantity",
         "description",
         "is_featured",
         "is_new_arrival",
-        "ratings",
         "reviews",
+        "commission_rate",
         "categories_id",
+        "discount_id",
     ];
     public function discount()
     {
