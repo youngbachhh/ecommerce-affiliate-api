@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-            $table->varchar('name');
-            $table->varchar('wallet_id');
-            $table->varchar('user_id');
+            $table->string('name');
+            $table->string('wallet_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->tinyInteger('type')->default(1); //1 : ví thường, 2: ví bonus
             $table->timestamps();
