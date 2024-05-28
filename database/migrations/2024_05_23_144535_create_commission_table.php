@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('commission', function (Blueprint $table) {
             $table->id();
-            $table->string('commission_rate');
+            $table->decimal('rate', 5, 2);;
             $table->string('level');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

@@ -21,12 +21,9 @@ class User extends Authenticatable implements JWTSubject
         "password",
         "referral_code",
         'referrer_id',
-        'total_revenue',
-        'wallet',
-        'bonus_wallet',
         'phone',
         'role_id',
-        'is_active',
+        'status',
     ];
     protected $hidden = [
         'password',

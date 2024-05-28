@@ -15,20 +15,19 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->index();
             $table->string('price');
             $table->string('product_unit')->nullable();
             $table->string('quantity');
-            $table->string('description')->nullable();
+            $table->text('description');
             $table->string('is_featured')->nullable();
             $table->string('is_new_arrival')->nullable();
-            $table->string('reviews')->nullable();
-            $table->integer('commission_rate')->nullable();
-            $table->unsignedBigInteger('categories_id');
-            $table->unsignedBigInteger('discount_id')->nullable();
-            $table->foreign('discount_id')->references('id')->on('discounts');
-            $table->foreign('categories_id')->references('id')->on('categories');
-            $table->enum('status', ['published', 'inactive', 'scheduled']);
+            $table->decimal('commission_rate', 5, 2);
+            $table->unsignedInteger('categories_id');
+            $table->unsignedInteger('discount_id')->nullable();
+            $table->foreign('discount_id')->references('id')->on('discounts')->onDelete('set null');
+            $table->foreign('categories_id')->references('id')->on('categories')->onDelete('restrict');
+            $table->enum('status', ['published', 'inactive', 'scheduled'])->index();
             $table->timestamps();
         });
     }

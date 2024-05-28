@@ -16,18 +16,16 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->index();
             $table->string('password');
             $table->string('address')->nullable();
             $table->string('referral_code')->nullable();
-            $table->string('referrer_id')->nullable();
+            $table->unsignedInteger('referrer_id')->nullable()->index();
+            $table->foreign('referrer_id')->references('id')->on('users')->onDelete('set null');
             $table->string('phone')->nullable();
-            $table->enum('status', ['active', 'inactive', 'pending'])->default('pending');
-            // Tạo cột user_id
-            $table->unsignedBigInteger('role_id');
-            // Tạo ràng buộc khóa ngoại
+            $table->enum('status', ['active', 'inactive', 'pending'])->default('pending')->index();
+            $table->unsignedInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
-            // $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

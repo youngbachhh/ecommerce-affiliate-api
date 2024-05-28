@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('user_info', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('img_url')->nullable();
             $table->string('idnumber')->nullable();

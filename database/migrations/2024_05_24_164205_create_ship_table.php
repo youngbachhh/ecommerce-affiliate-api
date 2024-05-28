@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('ship', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['delivered', 'out for delivery', 'ready to pickup', 'dispatched']);
-            $table->datetime('begin_time')->nullable();
-            $table->datetime('expected_arrive')->nullable();
-            $table->unsignedBigInteger('user_id'); // Thêm cột user_id
-            $table->unsignedBigInteger('order_id'); // Thêm cột order_id
+            $table->enum('status', ['delivered', 'out for delivery', 'ready to pickup', 'dispatched'])->index();
+            $table->timestamp('begin_time')->nullable();
+            $table->timestamp('end_time')->nullable();
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('order_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();

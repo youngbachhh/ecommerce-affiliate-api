@@ -16,10 +16,9 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('wallet_type')->nullable();
-            $table->integer('amount')->nullable();
-            $table->string('status')->nullable();
-            $table->unsignedBigInteger('user_id');
-
+            $table->bigInteger('amount')->nullable();
+            $table->enum('status', ['paid', 'pending', 'completed', 'failed'])->default('pending')->index();
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

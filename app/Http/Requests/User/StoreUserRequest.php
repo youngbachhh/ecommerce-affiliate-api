@@ -20,6 +20,11 @@ class StoreUserRequest extends FormRequest
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
             'role_id' => 'required|numeric',
+            'address' => 'nullable|string|max:255',
+            'referral_code' => 'nullable|string|max:255|unique:users',
+            'referrer_id' => 'nullable|numeric|exists:users,id',
+            'phone' => 'nullable|string|max:15',
+            'status' => 'required|string',
         ];
     }
 
@@ -29,6 +34,6 @@ class StoreUserRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-        return false;
+        throw new \Illuminate\Validation\ValidationException($validator, ApiResponse::error($validator->errors(), 422));
     }
 }

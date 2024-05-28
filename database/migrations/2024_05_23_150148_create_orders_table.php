@@ -19,13 +19,11 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
-            $table->integer('total_money')->nullable();
-            $table->enum('status', ['pending', 'completed', 'refunded', 'failed']);
+            $table->bigInteger('total_money')->nullable();
+            $table->enum('status', ['pending', 'completed', 'refunded', 'failed'])->default('pending')->index();
             $table->string('note')->nullable();
             $table->string('receive_address')->nullable();
-            // $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('user_id');
-            // $table->foreign('product_id')->references('id')->on('products');
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
