@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Faker\Generator as Faker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -12,10 +13,12 @@ use Exception;
 class UserService
 {
     protected $user;
+    protected $faker;
 
-    public function __construct(User $user)
+    public function __construct(User $user, Faker $faker)
     {
         $this->user = $user;
+        $this->faker = $faker;
     }
 
     /**
@@ -76,7 +79,12 @@ class UserService
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
+                'address' => @$data['address'],
+                'referral_code' => $data['referral_code'],
+                'referrer_id' => $this->randomRefferalCode(),
+                'phone' => @$data['phone'],
                 'role_id' => $data['role_id'],
+                'is_active' => 1
             ]);
 
             DB::commit();
@@ -141,5 +149,17 @@ class UserService
             Log::error("Failed to delete user: {$e->getMessage()}");
             throw $e;
         }
+    }
+
+    protected function randomRefferalCode()
+    {
+        $rand =  "RI" . $this->faker->numberBetween(10000000, 99999999);
+
+        $exist_user = User::where('referral_code', $rand)->exists();
+        while ($exist_user) {
+            $this->randomRefferalCode();
+        }
+
+        return $rand;
     }
 }
