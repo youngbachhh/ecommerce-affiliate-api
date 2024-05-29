@@ -19,7 +19,7 @@ class Product extends Model
         "is_new_arrival",
         "reviews",
         "commission_rate",
-        "categories_id",
+        "category_id",
         "discount_id",
     ];
     public function discount()
