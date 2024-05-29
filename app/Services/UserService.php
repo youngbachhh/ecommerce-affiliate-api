@@ -72,21 +72,28 @@ class UserService
     public function createUser(array $data): User
     {
         DB::beginTransaction();
-
         try {
-            Log::info("Creating a new user with email: {$data['email']}");
+            Log::info("Creating a new user with phone: {$data['phone']}");
+
+            $referral_code = $data['referral_code'];
+            $user1 = $this->user->where('referrer_id',$referral_code)->get();
+            if(!$user1){
+                return  false;
+            }
+            $is_flag = $user1->toArray();
             $user = $this->user->create([
-                'name' => $data['name'],
-                'email' => $data['email'],
+                'name' => $data['name'] ?? "",
+                'email' => $data['email'] ?? "",
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-                'referral_code' => $data['referral_code'],
-                'referrer_id' => $this->randomRefferalCode(),
+//              'referral_code' => $data['referral_code'],
+                'referral_code' => $is_flag[0]['referrer_id'],
+                'referrer_id' => $this->randomReferalCode(),
                 'phone' => @$data['phone'],
-                'role_id' => $data['role_id'],
-                'is_active' => 1
+                'role_id' => 3,
+                'active' => 1,
+                'commission_id'=> null,
             ]);
-
             DB::commit();
             return $user;
         } catch (Exception $e) {
@@ -95,7 +102,6 @@ class UserService
             throw $e;
         }
     }
-
     /**
      * Cập nhật thông tin người dùng
      *
@@ -151,13 +157,13 @@ class UserService
         }
     }
 
-    protected function randomRefferalCode()
+    protected function randomReferalCode()
     {
         $rand =  "RI" . $this->faker->numberBetween(10000000, 99999999);
 
         $exist_user = User::where('referral_code', $rand)->exists();
         while ($exist_user) {
-            $this->randomRefferalCode();
+            $this->randomReferalCode();
         }
 
         return $rand;

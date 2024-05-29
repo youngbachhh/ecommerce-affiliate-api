@@ -16,15 +16,16 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+         //   'name' => 'required|string|max:255',
+            'email' => 'string|max:255',
             'password' => 'required|string|min:6',
-            'role_id' => 'required|numeric',
+//            'role_id' => 'required|numeric',
             'address' => 'nullable|string|max:255',
-            'referral_code' => 'nullable|string|max:255|unique:users',
+//            'referral_code' => 'nullable|string|max:255|unique:users',
+            'referral_code' => 'nullable|string|max:255|',
             'referrer_id' => 'nullable|string|exists:users,id',
-            'phone' => 'nullable|string|max:15',
-            'status' => 'required|string',
+            'phone' => 'nullable|string|max:15|unique:users',
+//            'status' => 'required|string',
         ];
     }
 
