@@ -84,7 +84,7 @@ class UserService
                 'referrer_id' => $data['referrer_id'],
                 'phone' => @$data['phone'],
                 'role_id' => $data['role_id'],
-                'status' => $data['status'],
+                'status' => @$data['status'],
             ]);
 
             DB::commit();
@@ -165,7 +165,6 @@ class UserService
 
         $exist_user = User::where('referral_code', $rand)->exists();
         while ($exist_user) {
-            $this->randomReferralCode();
             $this->randomReferralCode();
         }
 
