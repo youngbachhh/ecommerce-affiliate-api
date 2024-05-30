@@ -84,7 +84,6 @@ class UserService
                 'referrer_id' => $data['referrer_id'],
                 'phone' => @$data['phone'],
                 'role_id' => $data['role_id'],
-                'is_active' => 1
             ]);
 
             DB::commit();
