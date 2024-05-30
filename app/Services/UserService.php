@@ -151,7 +151,15 @@ class UserService
         }
     }
 
-    protected function randomReferralCode()
+    /**
+     * Random mã giới thiệu
+     *
+     * @param void
+     * @return rand
+     * CreatedBy: svellsongur (28/05/2024)
+     * UpdatedBy: svellsongur (30/05/2024)
+     */
+    protected function randomReferrerID()
     {
         $rand =  "RI" . $this->faker->numberBetween(10000000, 99999999);
 
