@@ -64,4 +64,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Ship::class);
     }
+    public function wallet()
+    {
+        return $this->belongsToMany(Wallet::class);
+    }
 }

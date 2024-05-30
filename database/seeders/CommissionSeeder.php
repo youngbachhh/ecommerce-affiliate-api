@@ -23,7 +23,7 @@ class CommissionSeeder extends Seeder
     public function run()
     {
         //
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i <= 5; $i++) {
             Commission::create([
                 'level' => 'F'.$i + 1,
                 'rate' => $this->faker->numberBetween(0, 100),

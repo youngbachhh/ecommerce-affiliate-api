@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             [
                 "address" => 'mỹ đình thành phố hà nội',
                 "referral_code" => '456789',
-                'referrer_id' => '9999',
+                'referrer_id' => null,
                 // 'total_revenue' => '23444',
                 // 'wallet' => '234',
                 // 'bonus_wallet' => '9999',
