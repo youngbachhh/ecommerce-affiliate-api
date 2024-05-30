@@ -17,10 +17,10 @@ class Product extends Model
         "description",
         "is_featured",
         "is_new_arrival",
-        "reviews",
         "commission_rate",
         "category_id",
         "discount_id",
+        "status"
     ];
     public function discount()
     {

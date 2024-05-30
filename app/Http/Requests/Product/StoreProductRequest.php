@@ -16,15 +16,14 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
             'categories_id' => 'required|numeric|exists:categories,id',
-            'product_unit',
+            'product_unit' => 'nullable|string',
             'description' => 'required|string',
-            'is_featured',
-            'is_new_arrival',
-            'reviews',
+            'is_featured' => 'nullable|boolean',
+            'is_new_arrival' => 'nullable|boolean',
             'commission_rate' => 'sometimes|numeric|between:0,100',
             'discount_id' => 'sometimes|numeric|exists:discounts,id',
         ];
