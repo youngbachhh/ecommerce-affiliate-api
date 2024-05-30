@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+//use http\Env\Request;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
-
+use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     /**
@@ -23,15 +26,17 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
-
-        if (!$token = auth()->attempt($credentials)) {
-            return ApiResponse::error('Unauthorized', 401);
+      //  $credentials = request(['phone', 'password']);
+        $user = User::where('phone', $request->phone)->first();
+        if ($user && Hash::check($request->password, $user->password)) {
+            if (!$token = Auth::login($user)) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+            return $this->respondWithToken($token);
         }
-
-        return $this->respondWithToken($token);
+        return response()->json(['status' => 'error'] );
     }
 
     /**
@@ -51,9 +56,12 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth()->logout();
-
-        return ApiResponse::success('Successfully logged out');
+        $user = User::where('id', Auth::user()->id)->first();
+        $user->tokens()->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Successfully logged out',
+        ]);
     }
 
     /**
@@ -76,6 +84,7 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         $user = auth()->user();
+        $user->tokens()->delete();
         $userData = [
             'id' => $user->id,
             'fullname' => $user->name,
@@ -104,6 +113,22 @@ class AuthController extends Controller
                 ]
             ],
             'userData' => $userData,
+            'status' => 'success',
         ]);
+    }
+    public function getUser(Request $request) {
+        try {
+            $user = Auth::user();
+            return response()->json([
+                'status' => 'success',
+                'data' => $user,
+            ]);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 }

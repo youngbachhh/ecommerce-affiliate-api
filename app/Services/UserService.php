@@ -77,9 +77,9 @@ class UserService
 
             $referral_code = $data['referral_code'];
             $user1 = $this->user->where('referrer_id',$referral_code)->get();
-            if(!$user1){
-                return  false;
-            }
+//            if(!$user1){
+//                return  response()->json(['status'=>'error','message'=>'Mã giới thiệu không hợp lệ']);
+//            }
             $is_flag = $user1->toArray();
             $user = $this->user->create([
                 'name' => $data['name'] ?? "",
