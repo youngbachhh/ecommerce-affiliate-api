@@ -81,7 +81,7 @@ class UserService
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
                 'referral_code' => $data['referral_code'],
-                'referrer_id' => $this->randomRefferalCode(),
+                'referrer_id' => $this->randomReferrerID(),
                 'phone' => @$data['phone'],
                 'role_id' => $data['role_id'],
                 'is_active' => 1
@@ -151,13 +151,21 @@ class UserService
         }
     }
 
-    protected function randomRefferalCode()
+    /**
+     * Random mã giới thiệu
+     *
+     * @param void
+     * @return rand
+     * CreatedBy: svellsongur (28/05/2024)
+     * UpdatedBy: svellsongur (30/05/2024)
+     */
+    protected function randomReferrerID()
     {
         $rand =  "RI" . $this->faker->numberBetween(10000000, 99999999);
 
         $exist_user = User::where('referral_code', $rand)->exists();
         while ($exist_user) {
-            $this->randomRefferalCode();
+            $this->randomReferrerID();
         }
 
         return $rand;
