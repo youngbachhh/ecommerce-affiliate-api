@@ -5,7 +5,7 @@ namespace App\Http\Requests\User;
 use Illuminate\Foundation\Http\FormRequest;
 // use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Contracts\Validation\Validator;
-
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -22,7 +22,7 @@ class UpdateUserRequest extends FormRequest
         //     return $user->id === $routeUserId;
         // } catch (\Exception $e) {
         //     // Nếu có lỗi khi xác thực JWT, trả về false
-            return true;
+        return true;
         // }
     }
 
@@ -41,7 +41,7 @@ class UpdateUserRequest extends FormRequest
         ];
     }
 
-       /**
+    /**
      * Get the error messages for the defined validation rules.*
      * @return array
      */

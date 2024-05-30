@@ -18,7 +18,7 @@ class Product extends Model
         "is_featured",
         "is_new_arrival",
         "commission_rate",
-        "categories_id",
+        "category_id",
         "discount_id",
         "status"
     ];

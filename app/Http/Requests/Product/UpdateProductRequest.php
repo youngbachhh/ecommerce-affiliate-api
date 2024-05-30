@@ -4,7 +4,7 @@ namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-
+use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -19,17 +19,18 @@ class UpdateProductRequest extends FormRequest
             'name' => 'sometimes|required|string|max:255',
             'price' => 'sometimes|required|numeric',
             'quantity' => 'sometimes|required|numeric',
-            'categories_id' => 'sometimes|required',
             'product_unit' => 'nullable|string',
-            'description' => 'nullable|string',
+            'category_id' => 'sometimes|required|exists:categories,id',
+            'product_unit' => 'nullable|string',
+            'description' => 'sometimes|required|string',
             'is_featured' => 'nullable|boolean',
             'is_new_arrival' => 'nullable|boolean',
-            'commission_rate' => 'nullable|numeric|min:0|max:100',
-            'discount_id' => 'nullable',
+            'commission_rate' => 'sometimes|numeric|between:0,100',
+            'discount_id' => 'nullable|numeric|exists:discounts,id'
         ];
     }
 
-      /**
+    /**
      * Get the error messages for the defined validation rules.*
      * @return array
      */
