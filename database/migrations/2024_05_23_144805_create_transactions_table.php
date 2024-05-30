@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('wallet_type')->nullable();
-            $table->bigInteger('amount')->nullable();
+            $table->unsignedBigInteger('amount')->nullable();
             $table->enum('status', ['paid', 'pending', 'completed', 'failed'])->default('pending')->index();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

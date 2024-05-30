@@ -88,11 +88,13 @@ class UserService
                 'address' => @$data['address'],
 //              'referral_code' => $data['referral_code'],
                 'referral_code' => $is_flag[0]['referrer_id'],
-                'referrer_id' => $this->randomReferalCode(),
+                // 'referrer_id' => $this->randomReferalCode(),
                 'phone' => @$data['phone'],
-                'role_id' => 3,
-                'active' => 1,
                 'commission_id'=> null,
+                // 'referral_code' => $data['referral_code'],
+                'referrer_id' => $this->randomReferalCode(),
+                'role_id' => $data['role_id'],
+                'status' => $data['status'],
             ]);
             DB::commit();
             return $user;
