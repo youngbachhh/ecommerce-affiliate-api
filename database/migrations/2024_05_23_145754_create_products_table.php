@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('product_unit')->nullable();
             $table->string('quantity');
             $table->text('description');
-            $table->string('is_featured')->nullable();
-            $table->string('is_new_arrival')->nullable();
+            $table->boolean('in_stock')->default(true);
+            $table->boolean('is_featured')->nullable();
+            $table->boolean('is_new_arrival')->nullable();
             $table->decimal('commission_rate', 5, 2);
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('discount_id')->nullable();

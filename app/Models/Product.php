@@ -15,6 +15,7 @@ class Product extends Model
         "product_unit",
         "quantity",
         "description",
+        "in_stock",
         "is_featured",
         "is_new_arrival",
         "commission_rate",
