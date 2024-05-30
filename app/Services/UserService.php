@@ -155,7 +155,7 @@ class UserService
      * Random mã giới thiệu
      *
      * @param void
-     * @return rand
+     * @return $rand
      * CreatedBy: svellsongur (28/05/2024)
      * UpdatedBy: svellsongur (30/05/2024)
      */
