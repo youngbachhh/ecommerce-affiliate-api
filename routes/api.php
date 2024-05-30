@@ -46,9 +46,9 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
 
     Route::group(['prefix' => 'categories'], function ($router) {
         Route::get('/', [CategoryController::class, 'index']);
-        Route::get('/{id}/products/count', [CategoryController::class, 'getProductCount']);
         Route::post('/', [CategoryController::class, 'store']);
         Route::put('/{id}', [CategoryController::class, 'update']);
+        Route::delete('/{id}', [CategoryController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'products'], function ($router) {

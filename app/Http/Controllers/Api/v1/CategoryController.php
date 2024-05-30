@@ -43,10 +43,10 @@ class CategoryController extends Controller
         }
     }
 
-    public function update(UpdateCategoryRequest $request, $id)
+    public function update($id, UpdateCategoryRequest $request)
     {
         try {
-            $category = $this->categoryService->updateCategory($request->validated(), $id);
+            $category = $this->categoryService->updateCategory($id, $request->validated());
             return ApiResponse::success($category, 'Category updated successfully');
         } catch (ModelNotFoundException $e) {
             $exception = new CategoryNotFoundException();
@@ -57,17 +57,17 @@ class CategoryController extends Controller
         }
     }
 
-    public function getProductCount($id)
+    public function destroy($id)
     {
         try {
-            $count = $this->categoryService->getProductCountByCategory($id);
-            return ApiResponse::success($count);
+            $this->categoryService->deleteCategory($id);
+            return ApiResponse::success([], 'Category deleted successfully');
         } catch (ModelNotFoundException $e) {
             $exception = new CategoryNotFoundException();
             return $exception->render(request());
         } catch (\Exception $e) {
-            Log::error('Failed to fetch product count: ' . $e->getMessage());
-            return ApiResponse::error('Failed to fetch product count', 500);
+            Log::error('Failed to delete category: ' . $e->getMessage());
+            return ApiResponse::error('Failed to delete category', 500);
         }
     }
 }

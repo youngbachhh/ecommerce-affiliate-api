@@ -96,14 +96,25 @@ class CategoryService
         }
     }
 
-    public function getProductCountByCategory(int $id): int
+    /**
+     * Hàm xóa một danh mục
+     *
+     * @param int $id
+     * @throws Exception
+     * CreatedBy: youngbachhh (30/05/2024)
+     */
+    public function deleteCategory(int $id): void
     {
+        DB::beginTransaction();
         try {
-            Log::info("Fetching product count for category with ID: $id");
-            return $this->category->findOrFail($id)->products()->count();
+            Log::info("Deleting category with ID: $id");
+            $category = $this->category->findOrFail($id);
+            $category->delete();
+            DB::commit();
         } catch (Exception $e) {
-            Log::error('Failed to fetch product count: ' . $e->getMessage());
-            throw new Exception('Failed to fetch product count');
+            DB::rollBack();
+            Log::error('Failed to delete category: ' . $e->getMessage());
+            throw new Exception('Failed to delete category');
         }
     }
 }
