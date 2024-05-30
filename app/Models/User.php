@@ -66,6 +66,6 @@ class User extends Authenticatable implements JWTSubject
     }
     public function wallet()
     {
-        return $this->belongsToMany(Wallet::class);
+        return $this->belongsToMany(Wallet::class)->withTimestamps();
     }
 }

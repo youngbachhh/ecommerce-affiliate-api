@@ -13,8 +13,8 @@ class Commission extends Model
         "rate",
         "level",
     ];
-    public function user()
-    {
-        return $this->hasMany(User::class);
-    }
+    // public function user()
+    // {
+    //     return $this->hasMany(User::class);
+    // }
 }

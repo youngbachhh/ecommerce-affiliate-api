@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             CommissionSeeder::class,
+            WalletSeeder::class
         ]);
     }
 }

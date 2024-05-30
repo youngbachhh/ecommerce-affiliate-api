@@ -2,23 +2,26 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Models\User;
+use App\Models\Wallet;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Log;
-use Exception;
 
 class UserService
 {
     protected $user;
     protected $faker;
+    protected $wallet;
 
-    public function __construct(User $user, Faker $faker)
+    public function __construct(User $user, Faker $faker, Wallet $wallet)
     {
         $this->user = $user;
         $this->faker = $faker;
+        $this->wallet = $wallet;
     }
 
     /**
@@ -84,9 +87,13 @@ class UserService
                 'referrer_id' => $data['referrer_id'],
                 'phone' => @$data['phone'],
                 'role_id' => $data['role_id'],
-                'status' => @$data['status'],
+                'status' => $data['status'],
             ]);
 
+            $wallets = $this->wallet->all()->pluck('id')->toArray();
+            foreach ($wallets as $wallet) {
+                $user->wallet()->attach($wallet);
+            }
             DB::commit();
             return $user;
         } catch (Exception $e) {

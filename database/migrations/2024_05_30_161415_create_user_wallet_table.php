@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('wallet_id');
             $table->foreign('wallet_id')->references('id')->on('wallets');
-            $table->integer('total_revenue');
+            $table->integer('total_revenue')->default(0);
             $table->timestamps();
         });
     }
