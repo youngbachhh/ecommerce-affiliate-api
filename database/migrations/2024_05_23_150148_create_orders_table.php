@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
-            $table->bigInteger('total_money')->nullable();
+            $table->unsignedBigInteger('total_money')->nullable();
             $table->enum('status', ['pending', 'completed', 'refunded', 'failed'])->default('pending')->index();
             $table->string('note')->nullable();
             $table->string('receive_address')->nullable();

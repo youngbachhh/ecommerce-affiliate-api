@@ -3,10 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\v1\UserController;
-use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Api\v1\ProductController;
+use App\Http\Controllers\Api\v1\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,7 +34,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     });
 
     Route::group([
-        'middleware' => ['api','jwt.auth'],
+        'middleware' => ['api', 'jwt.auth'],
         'prefix' => 'user'
     ], function ($router) {
         Route::get('/', [UserController::class, 'index']);
@@ -41,6 +42,13 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::post('/', [UserController::class, 'store']);
         Route::put('/{id}', [UserController::class, 'update']);
         Route::delete('/{id}', [UserController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'categories'], function ($router) {
+        Route::get('/', [CategoryController::class, 'index']);
+        Route::post('/', [CategoryController::class, 'store']);
+        Route::put('/{id}', [CategoryController::class, 'update']);
+        Route::delete('/{id}', [CategoryController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'products'], function ($router) {

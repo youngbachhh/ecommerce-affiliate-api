@@ -19,18 +19,18 @@ class StoreProductRequest extends FormRequest
             'name' => 'required',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'categories_id' => 'required',
+            'categories_id' => 'required|numeric|exists:categories,id',
             'product_unit',
-            'description',
+            'description' => 'required|string',
             'is_featured',
             'is_new_arrival',
             'reviews',
-            'commission_rate',
-            'discount_id',
+            'commission_rate' => 'sometimes|numeric|between:0,100',
+            'discount_id' => 'sometimes|numeric|exists:discounts,id',
         ];
     }
 
-      /**
+    /**
      * Get the error messages for the defined validation rules.*
      * @return array
      */
