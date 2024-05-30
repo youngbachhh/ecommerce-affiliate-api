@@ -80,8 +80,8 @@ class UserService
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-                'referral_code' => $data['referral_code'],
-                'referrer_id' => $this->randomReferrerID(),
+                'referral_code' => $this->randomReferralCode(),
+                'referrer_id' => $data['referrer_id'],
                 'phone' => @$data['phone'],
                 'role_id' => $data['role_id'],
                 'is_active' => 1
@@ -159,13 +159,13 @@ class UserService
      * CreatedBy: svellsongur (28/05/2024)
      * UpdatedBy: svellsongur (30/05/2024)
      */
-    protected function randomReferrerID()
+    protected function randomReferralCode()
     {
         $rand =  "RI" . $this->faker->numberBetween(10000000, 99999999);
 
         $exist_user = User::where('referral_code', $rand)->exists();
         while ($exist_user) {
-            $this->randomReferrerID();
+            $this->randomReferralCode();
         }
 
         return $rand;
