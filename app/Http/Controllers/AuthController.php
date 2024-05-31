@@ -28,11 +28,10 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-      //  $credentials = request(['phone', 'password']);
-        $user = User::where('phone', $request->phone)->first();
+        $user = User::where('phone', $request->phone)->orwhere('email',$request->phone)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             if (!$token = Auth::login($user)) {
-                return response()->json(['error' => 'Unauthorized'], 401);
+                return ApiResponse::error('Unauthorized', 401);
             }
             return $this->respondWithToken($token);
         }
@@ -58,10 +57,7 @@ class AuthController extends Controller
     {
         $user = User::where('id', Auth::user()->id)->first();
         $user->tokens()->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Successfully logged out',
-        ]);
+        return ApiResponse::success('Successfully logged out', 201);
     }
 
     /**

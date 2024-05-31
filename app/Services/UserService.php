@@ -2,14 +2,18 @@
 
 namespace App\Services;
 
+
+use App\Events\EventRegister;
+use App\Http\Responses\ApiResponse;
 use App\Models\User;
 use Faker\Generator as Faker;
+use Illuminate\http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use Exception;
-
+use Carbon\Carbon;
 class UserService
 {
     protected $user;
@@ -69,32 +73,52 @@ class UserService
      * CreatedBy: youngbachhh (24/05/2024)
      * UpdatedBy: youngbachhh (27/05/2024)
      */
-    public function createUser(array $data): User
+
+    public function sendCodeOtp($data)
+    {
+
+        try {
+            Log::info("Creating a new user with phone: {$data['phone'] }");
+            $referral_id = $data['referral_code'];
+            $findUser = $this->user->where('referrer_id',$referral_id)->get();
+            $is_result = $findUser->toArray();
+            $user = [
+                'name' => @$data['name'],
+                'email' => @$data['email'],
+                'password' => Hash::make($data['password']),
+                'address' => @$data['address'],
+                'referral_code' => $is_result[0]['referrer_id'],
+                'phone' => @$data['phone'],
+                'referrer_id' => $this->randomReferalCode(),
+                'role_id' => 3,
+                'status' => 'active',
+                'otp'=> @$data['otp'],
+            ];
+            event(new EventRegister($user,@$data['otp']));
+            return $user;
+        } catch (Exception $e) {
+            Log::error("Failed to create user: {$e->getMessage()}");
+            throw $e;
+        }
+    }
+    public function createUser(array $data)
     {
         DB::beginTransaction();
         try {
-            Log::info("Creating a new user with phone: {$data['phone']}");
-
-            $referral_code = $data['referral_code'];
-            $user1 = $this->user->where('referrer_id',$referral_code)->get();
-//            if(!$user1){
-//                return  response()->json(['status'=>'error','message'=>'Mã giới thiệu không hợp lệ']);
-//            }
-            $is_flag = $user1->toArray();
+            Log::info("Creating a new user with phone: {$data['phone'] }");
+            $referral_id = $data['referral_code'];
+            $findUser = $this->user->where('referrer_id',$referral_id)->get();
+            $is_result = $findUser->toArray();
             $user = $this->user->create([
-                'name' => $data['name'] ?? "",
-                'email' => $data['email'] ?? "",
+                'name' => @$data['name'],
+                'email' => @$data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-//              'referral_code' => $data['referral_code'],
-                'referral_code' => $is_flag[0]['referrer_id'],
-                // 'referrer_id' => $this->randomReferalCode(),
+                'referral_code' => $is_result[0]['referrer_id'],
                 'phone' => @$data['phone'],
-                'commission_id'=> null,
-                // 'referral_code' => $data['referral_code'],
                 'referrer_id' => $this->randomReferalCode(),
-                'role_id' => $data['role_id'],
-                'status' => $data['status'],
+                'role_id' => 3,
+                'status' => 'active',
             ]);
             DB::commit();
             return $user;

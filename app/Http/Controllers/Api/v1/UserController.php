@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+
 use App\Http\Controllers\Controller;
 use App\Services\UserService;
 use App\Http\Requests\User\StoreUserRequest;
@@ -10,8 +11,10 @@ use App\Http\Responses\ApiResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Exceptions\UserNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cookie;
 class UserController extends Controller
 {
     protected $userService;
@@ -32,17 +35,29 @@ class UserController extends Controller
         }
     }
 
-    public function store(StoreUserRequest $request)
+    public function sendOtp(StoreUserRequest $request)
     {
         try {
-            $user = $this->userService->createUser($request->validated());
+            $is_user_confirm = $this->userService->sendCodeOtp($request->validated());
+//            $request = new Request($is_user_confirm);
+//            $request->merge(['otp' => $is_user_confirm['otp']]);
+//            $this->store($request);
+            return ApiResponse::success($is_user_confirm, 'User created successfully', 201);
+        } catch (\Exception $e) {
+            Log::error('Failed to create user: ' . $e->getMessage());
+            return ApiResponse::error('Failed to create user ', 500);
+        }
+    }
+    public function store(Request $request)
+    {
+        try {
+            $user = $this->userService->createUser($request->all());
             return ApiResponse::success($user, 'User created successfully', 201);
         } catch (\Exception $e) {
             Log::error('Failed to create user: ' . $e->getMessage());
-            return ApiResponse::error('Failed to create user', 500);
+            return ApiResponse::error('Failed to create user ', 500);
         }
     }
-
     public function show($id)
     {
         try {
