@@ -10,11 +10,11 @@ class Commission extends Model
     use HasFactory;
     protected $table = "commission";
     protected $fillable = [
-        "commission_rate",
+        "rate",
         "level",
     ];
-    public function user()
-    {
-        return $this->hasMany(User::class);
-    }
+    // public function user()
+    // {
+    //     return $this->hasMany(User::class);
+    // }
 }

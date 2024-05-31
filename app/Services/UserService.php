@@ -2,23 +2,26 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Models\User;
+use App\Models\Wallet;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Log;
-use Exception;
 
 class UserService
 {
     protected $user;
     protected $faker;
+    protected $wallet;
 
-    public function __construct(User $user, Faker $faker)
+    public function __construct(User $user, Faker $faker, Wallet $wallet)
     {
         $this->user = $user;
         $this->faker = $faker;
+        $this->wallet = $wallet;
     }
 
     /**
@@ -80,13 +83,17 @@ class UserService
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-                'referral_code' => $data['referral_code'],
-                'referrer_id' => $this->randomReferralCode(),
+                'referral_code' => $this->randomReferralCode(),
+                'referrer_id' => $data['referrer_id'],
                 'phone' => @$data['phone'],
                 'role_id' => $data['role_id'],
                 'status' => $data['status'],
             ]);
 
+            $wallets = $this->wallet->all()->pluck('id')->toArray();
+            foreach ($wallets as $wallet) {
+                $user->wallet()->attach($wallet);
+            }
             DB::commit();
             return $user;
         } catch (Exception $e) {
@@ -151,6 +158,14 @@ class UserService
         }
     }
 
+    /**
+     * Random mã giới thiệu
+     *
+     * @param void
+     * @return $rand
+     * CreatedBy: svellsongur (28/05/2024)
+     * UpdatedBy: svellsongur (30/05/2024)
+     */
     protected function randomReferralCode()
     {
         $rand =  "RI" . $this->faker->numberBetween(10000000, 99999999);
