@@ -19,13 +19,8 @@ class UserSeeder extends Seeder
         $data = [
             [
                 "address" => 'mỹ đình thành phố hà nội',
-<<<<<<< HEAD
                 "referral_code" => '456789',
                 'referrer_id' => 'RI14933175',
-=======
-                "referral_code" => 'RI456789',
-                'referrer_id' => null,
->>>>>>> main
                 // 'total_revenue' => '23444',
                 // 'wallet' => '234',
                 // 'bonus_wallet' => '9999',

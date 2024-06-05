@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Log;
-use Exception;
+//use Illuminate\Support\Facades\Log;
+//use Exception;
 use Carbon\Carbon;
 
 class UserService
@@ -93,11 +93,11 @@ class UserService
                 'email' => @$data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-                'referral_code' => $is_result[0]['referrer_id'],
+                'referral_code' => $this->randomReferalCode(),
                 // 'referral_code' => $this->randomReferralCode(),
                 // 'referrer_id' => $data['referrer_id'],
                 'phone' => @$data['phone'],
-                'referrer_id' => $this->randomReferalCode(),
+                'referrer_id' => $is_result[0]['referrer_id'],
                 'role_id' => 3,
                 'status' => 'active',
                 'otp'=> @$data['otp'],
@@ -196,7 +196,6 @@ class UserService
         }
     }
 
-    protected function randomReferalCode()
     /**
      * Random mã giới thiệu
      *
@@ -205,7 +204,7 @@ class UserService
      * CreatedBy: svellsongur (28/05/2024)
      * UpdatedBy: svellsongur (30/05/2024)
      */
-    protected function randomReferralCode()
+    protected function randomReferalCode()
     {
         $rand =  "RI" . $this->faker->numberBetween(10000000, 99999999);
 

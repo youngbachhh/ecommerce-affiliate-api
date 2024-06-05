@@ -35,7 +35,7 @@ class AuthController extends Controller
             }
             return $this->respondWithToken($token);
         }
-        return response()->json(['status' => 'error'] );
+        return ApiResponse::error('Error', 401);
     }
 
     /**
@@ -80,24 +80,12 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         $user = auth()->user();
+        if(($user->role->name === "Admin")){
+            $role = "Admin";
+        }else {
+            $role = "User";
+        }
         $user->tokens()->delete();
-        $userData = [
-            'id' => $user->id,
-            'fullname' => $user->name,
-            'username' => $user->name,
-            'email' => $user->email,
-            'role_id' => $user->role_id,
-            'role' => 'admin',
-            'referral_code' => $user->referral_code,
-            'referrer_id' => $user->referrer_id,
-            'address' => $user->address,
-            'total_revenue' => $user->total_revenue,
-            'wallet' => $user->wallet,
-            'bonus_wallet' => $user->bonus_wallet,
-            'phone' => $user->phone,
-            'status' => $user->status,
-        ];
-
         return response()->json([
             'accessToken' => $token,
             'token_type' => 'bearer',
@@ -108,8 +96,9 @@ class AuthController extends Controller
                     'subject' => 'all'
                 ]
             ],
-            'userData' => $userData,
+            'userData' => $user,
             'status' => 'success',
+            'role' => $role,
         ]);
     }
     public function getUser(Request $request) {

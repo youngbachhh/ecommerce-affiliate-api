@@ -23,7 +23,7 @@ use App\Http\Controllers\Api\v1\CategoryController;
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function () {
     Route::post('/send-otp', [UserController::class, 'sendOtp']);
     Route::post('/register', [UserController::class, 'store']);
-    Route::post('login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login']);
     Route::group([
         'middleware' => 'api',
         'prefix' => 'auth'
