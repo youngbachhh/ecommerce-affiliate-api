@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\CategoryController;
+use App\Http\Controllers\Api\v1\CartController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -62,9 +63,9 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     });
 
     Route::group(['prefix' => 'cart'], function ($router) {
-        Route::post('/', [ProductController::class, 'addToCart']);
-        Route::get('/', [ProductController::class, 'getToCart']);
-        Route::delete('/{id}', [ProductController::class, 'delToCart']);
-        Route::put('/{id}', [ProductController::class, 'updateToCart']);
+        Route::post('/', [CartController::class, 'addToCart']);
+        Route::get('/', [CartController::class, 'getToCart']);
+        Route::delete('/{id}', [CartController::class, 'deleteCart']);
+        Route::post('update/{id}', [CartController::class, 'updateToCart']);
     });
 });

@@ -12,6 +12,7 @@ class Cart extends Model
     protected $fillable = [
         "product_id",
         "user_id",
+        "amount",
     ];
     protected $hidden = [
         'created_at',
@@ -26,8 +27,8 @@ class Cart extends Model
     {
         return $this->belongsToMany(Product::class, 'product_id');
     }
-    // public function getProductAttribute()
-    // {
-    //     return Product::where('id', $this->attributes['product_id'])->first();
-    // }
+    public function getProductAttribute()
+    {
+        return Product::where('id', $this->attributes['product_id'])->first();
+    }
 }
