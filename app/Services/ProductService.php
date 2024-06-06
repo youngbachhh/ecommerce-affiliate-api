@@ -3,11 +3,12 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use Exception;
-
+use Illuminate\Support\Facades\Storage;
 class ProductService
 {
     protected $product;
@@ -75,7 +76,7 @@ class ProductService
                 'price' => $data['price'],
                 'quantity' => $data['quantity'],
                 'product_unit' => @$data['product_unit'],
-                'categories_id' => $data['categories_id'],
+                'category_id' => $data['category_id'],
                 'description' => @$data['description'],
                 'is_featured' => @$data['is_featured'],
                 'is_new_arrival' => @$data['is_new_arrival'],
@@ -84,6 +85,24 @@ class ProductService
                 'discount_id' => @$data['discount_id'],
             ]);
 
+            if($product){
+                $imagesArray =json_decode($data['images'], true);
+                Log::info("{$data['images']}");
+                foreach ($imagesArray as $item) {
+                    $fileData = $item['data'];
+                    $file = base64_decode($fileData);
+                    $filename = 'image_' . time() . '_' . uniqid() . '.jpg'; // Thêm một chuỗi duy nhất vào tên tệp tin
+                    $path = 'public/images/' . $filename;
+                    // Lưu file vào thư mục "storage/app/public/images"
+                    Storage::put($path, $file);
+                    $url = Storage::url($path);
+                    Log::info("File ảnh đã được lưu: {$url}");
+                    $image = new ProductImage();
+                    $image->product_id = $product->id;
+                    $image->image_path = $path;
+                    $image->save();
+                }
+            }
             DB::commit();
             return $product;
         } catch (Exception $e) {

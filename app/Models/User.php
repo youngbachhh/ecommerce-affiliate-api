@@ -30,6 +30,12 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
+    protected $appends = ['role'];
+
+    public function getRoleAttribute(){
+      return  Role::where('id',$this->attributes['role_id'])->first();
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

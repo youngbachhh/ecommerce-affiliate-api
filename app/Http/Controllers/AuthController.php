@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+//use http\Env\Request;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponse;
-
+use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     /**
@@ -23,15 +26,16 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
-
-        if (!$token = auth()->attempt($credentials)) {
-            return ApiResponse::error('Unauthorized', 401);
+        $user = User::where('phone', $request->phone)->orwhere('email',$request->phone)->first();
+        if ($user && Hash::check($request->password, $user->password)) {
+            if (!$token = Auth::login($user)) {
+                return ApiResponse::error('Unauthorized', 401);
+            }
+            return $this->respondWithToken($token);
         }
-
-        return $this->respondWithToken($token);
+        return ApiResponse::error('Error', 401);
     }
 
     /**
@@ -51,9 +55,9 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth()->logout();
-
-        return ApiResponse::success('Successfully logged out');
+        $user = User::where('id', Auth::user()->id)->first();
+        $user->tokens()->delete();
+        return ApiResponse::success('Successfully logged out', 201);
     }
 
     /**
@@ -76,23 +80,12 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         $user = auth()->user();
-        $userData = [
-            'id' => $user->id,
-            'fullname' => $user->name,
-            'username' => $user->name,
-            'email' => $user->email,
-            'role_id' => $user->role_id,
-            'role' => 'admin',
-            'referral_code' => $user->referral_code,
-            'referrer_id' => $user->referrer_id,
-            'address' => $user->address,
-            'total_revenue' => $user->total_revenue,
-            'wallet' => $user->wallet,
-            'bonus_wallet' => $user->bonus_wallet,
-            'phone' => $user->phone,
-            'status' => $user->status,
-        ];
-
+        if(($user->role->name === "Admin")){
+            $role = "Admin";
+        }else {
+            $role = "User";
+        }
+        $user->tokens()->delete();
         return response()->json([
             'accessToken' => $token,
             'token_type' => 'bearer',
@@ -103,7 +96,24 @@ class AuthController extends Controller
                     'subject' => 'all'
                 ]
             ],
-            'userData' => $userData,
+            'userData' => $user,
+            'status' => 'success',
+            'role' => $role,
         ]);
+    }
+    public function getUser(Request $request) {
+        try {
+            $user = Auth::user();
+            return response()->json([
+                'status' => 'success',
+                'data' => $user,
+            ]);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 }

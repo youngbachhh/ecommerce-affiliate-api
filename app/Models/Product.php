@@ -10,6 +10,7 @@ class Product extends Model
     use HasFactory;
     protected $table = "products";
     protected $fillable = [
+        "id",
         "name",
         "price",
         "product_unit",
@@ -22,6 +23,13 @@ class Product extends Model
         "discount_id",
         "status"
     ];
+    protected $appends = ['category','images'];
+    public function getImagesAttribute(){
+        return ProductImage::where('product_id',$this->attributes['id'])->get();
+    }
+    public function getCategoryAttribute(){
+        return Category::where('id',$this->attributes['category_id'])->first();
+    }
     public function discount()
     {
         return $this->belongsTo(Discount::class);

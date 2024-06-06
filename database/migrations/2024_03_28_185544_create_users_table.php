@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
+//            $table->string('email')->unique()->index();
             $table->string('email')->unique()->index();
             $table->string('password');
             $table->string('address')->nullable();
             $table->string('referral_code')->nullable();
             $table->string('referrer_id')->nullable()->index();
-            $table->string('phone')->nullable();
+            $table->string('phone')->unique()->index();
             $table->unsignedBigInteger('commission_id')->nullable();
             $table->foreign('commission_id')->references('id')->on('commission');
             $table->enum('status', ['active', 'inactive', 'pending'])->default('pending')->index();

@@ -26,6 +26,8 @@ class StoreProductRequest extends FormRequest
             'is_new_arrival' => 'nullable|boolean',
             'commission_rate' => 'sometimes|numeric|between:0,100',
             'discount_id' => 'sometimes|numeric|exists:discounts,id',
+            'category_id'=> 'required',
+            'images'=> 'required',
         ];
     }
 

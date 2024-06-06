@@ -2,14 +2,21 @@
 
 namespace App\Services;
 
+
+use App\Events\EventRegister;
+use App\Http\Responses\ApiResponse;
 use Exception;
 use App\Models\User;
 use App\Models\Wallet;
 use Faker\Generator as Faker;
+use Illuminate\http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+//use Illuminate\Support\Facades\Log;
+//use Exception;
+use Carbon\Carbon;
 
 class UserService
 {
@@ -72,22 +79,54 @@ class UserService
      * CreatedBy: youngbachhh (24/05/2024)
      * UpdatedBy: youngbachhh (27/05/2024)
      */
-    public function createUser(array $data): User
+
+    public function sendCodeOtp($data)
     {
-        DB::beginTransaction();
 
         try {
-            Log::info("Creating a new user with email: {$data['email']}");
-            $user = $this->user->create([
-                'name' => $data['name'],
-                'email' => $data['email'],
+            Log::info("Creating a new user with phone: {$data['phone'] }");
+            $referral_id = $data['referral_code'];
+            $findUser = $this->user->where('referrer_id',$referral_id)->get();
+            $is_result = $findUser->toArray();
+            $user = [
+                'name' => @$data['name'],
+                'email' => @$data['email'],
                 'password' => Hash::make($data['password']),
                 'address' => @$data['address'],
-                'referral_code' => $this->randomReferralCode(),
-                'referrer_id' => $data['referrer_id'],
+                'referral_code' => $this->randomReferalCode(),
+                // 'referral_code' => $this->randomReferralCode(),
+                // 'referrer_id' => $data['referrer_id'],
                 'phone' => @$data['phone'],
-                'role_id' => $data['role_id'],
-                'status' => $data['status'],
+                'referrer_id' => $is_result[0]['referrer_id'],
+                'role_id' => 3,
+                'status' => 'active',
+                'otp'=> @$data['otp'],
+            ];
+            event(new EventRegister($user,@$data['otp']));
+            return $user;
+        } catch (Exception $e) {
+            Log::error("Failed to create user: {$e->getMessage()}");
+            throw $e;
+        }
+    }
+    public function createUser(array $data)
+    {
+        DB::beginTransaction();
+        try {
+            Log::info("Creating a new user with phone: {$data['phone'] }");
+            $referral_id = $data['referral_code'];
+            $findUser = $this->user->where('referrer_id',$referral_id)->get();
+            $is_result = $findUser->toArray();
+            $user = $this->user->create([
+                'name' => @$data['name'],
+                'email' => @$data['email'],
+                'password' => Hash::make($data['password']),
+                'address' => @$data['address'],
+                'referral_code' => $is_result[0]['referrer_id'],
+                'phone' => @$data['phone'],
+                'referrer_id' => $this->randomReferalCode(),
+                'role_id' => 3,
+                'status' => 'active',
             ]);
 
             $wallets = $this->wallet->all()->pluck('id')->toArray();
@@ -102,7 +141,6 @@ class UserService
             throw $e;
         }
     }
-
     /**
      * Cập nhật thông tin người dùng
      *
@@ -166,13 +204,13 @@ class UserService
      * CreatedBy: svellsongur (28/05/2024)
      * UpdatedBy: svellsongur (30/05/2024)
      */
-    protected function randomReferralCode()
+    protected function randomReferalCode()
     {
         $rand =  "RI" . $this->faker->numberBetween(10000000, 99999999);
 
         $exist_user = User::where('referral_code', $rand)->exists();
         while ($exist_user) {
-            $this->randomReferralCode();
+            $this->randomReferalCode();
         }
 
         return $rand;

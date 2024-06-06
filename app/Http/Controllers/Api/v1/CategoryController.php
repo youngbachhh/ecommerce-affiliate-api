@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Services\CategoryService;
 use App\Http\Responses\ApiResponse;
+use http\Env\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Exceptions\CategoryNotFoundException;
@@ -43,10 +44,10 @@ class CategoryController extends Controller
         }
     }
 
-    public function update($id, UpdateCategoryRequest $request)
+    public function update($id, Request $request)
     {
         try {
-            $category = $this->categoryService->updateCategory($id, $request->validated());
+            $category = $this->categoryService->updateCategory($id, $request->all());
             return ApiResponse::success($category, 'Category updated successfully');
         } catch (ModelNotFoundException $e) {
             $exception = new CategoryNotFoundException();
